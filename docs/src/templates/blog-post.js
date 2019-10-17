@@ -7,111 +7,14 @@
  */
 
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
 import { Link, graphql } from 'gatsby';
-import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { Grid, Row, Col } from '@zendeskgarden/react-grid';
-import {
-  XXXL,
-  XXL,
-  XL,
-  LG,
-  MD,
-  OrderedList,
-  UnorderedList,
-  Code
-} from '@zendeskgarden/react-typography';
-import { Anchor } from '@zendeskgarden/react-buttons';
+import { XXXL, UnorderedList } from '@zendeskgarden/react-typography';
 
+import MdxProvider from '../components/mdx/MdxProvider';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import { getColor } from '@zendeskgarden/react-theming';
-
-const HeaderAnchorStyling = createGlobalStyle`
-  .remark-autolink {
-    float: left;
-    margin-left: -20px;
-    padding-right: 4px;
-    line-height: 1;
-  }
-
-  .remark-autolink-svg {
-    display: inline-block;
-    visibility: hidden;
-    vertical-align: middle;
-  }
-
-  h2:hover .remark-autolink-svg {
-    visibility: visible;
-  }
-
-  h3:hover .remark-autolink-svg {
-    visibility: visible;
-  }
-
-  h4:hover .remark-autolink-svg {
-    visibility: visible;
-  }
-
-  h5:hover .remark-autolink-svg {
-    visibility: visible;
-  }
-
-  h6:hover .remark-autolink-svg {
-    visibility: visible;
-  }
-`;
-
-const StyledH2 = styled(XXL).attrs({ tag: 'h2' })`
-  margin-bottom: ${props => props.theme.space.sm};
-`;
-
-const StyledHr = styled.hr`
-  margin: ${props => props.theme.space.sm} 0;
-`;
-
-const StyledDo = styled.div`
-  background-color: ${props => getColor('successHue', 300, props.theme, 0.4)};
-  padding: ${props => props.theme.space.md};
-  color: ${props => getColor('successHue', 800, props.theme)};
-`;
-
-const StyledDont = styled.div`
-  background-color: ${props => getColor('dangerHue', 300, props.theme, 0.4)};
-  padding: ${props => props.theme.space.md};
-  color: ${props => getColor('dangerHue', 800, props.theme)};
-`;
-
-const Do = ({ children }) => {
-  return (
-    <StyledDo>
-      <XL
-        css={`
-          margin-bottom: ${props => props.theme.space.xs};
-        `}
-      >
-        Do
-      </XL>
-      <UnorderedList>{children}</UnorderedList>
-    </StyledDo>
-  );
-};
-
-const Dont = ({ children }) => {
-  return (
-    <StyledDont>
-      <XL
-        css={`
-          margin-bottom: ${props => props.theme.space.xs};
-        `}
-      >
-        Don&apos;t
-      </XL>
-      <UnorderedList>{children}</UnorderedList>
-    </StyledDont>
-  );
-};
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -143,30 +46,8 @@ class BlogPostTemplate extends React.Component {
       </UnorderedList>
     );
 
-    const components = {
-      h1: props => <XXXL tag="h1" {...props} />,
-      h2: StyledH2,
-      h3: props => <XL tag="h3" {...props} />,
-      h4: props => <LG tag="h4" {...props} />,
-      h5: props => <LG tag="h5" {...props} />,
-      h6: props => <LG tag="h6" {...props} />,
-      p: props => <MD tag="p" {...props} />,
-      inlineCode: Code,
-      ul: UnorderedList,
-      ol: OrderedList,
-      li: UnorderedList.Item,
-      a: Anchor,
-      hr: StyledHr,
-      Do,
-      Dont,
-      Grid,
-      Row,
-      Col
-    };
-
     return (
       <Layout location={this.props.location} title={siteTitle}>
-        <HeaderAnchorStyling />
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
@@ -189,9 +70,9 @@ class BlogPostTemplate extends React.Component {
                     {post.frontmatter.date} | {timeToReadMinutes} minutes
                   </p>
                 </header>
-                <MDXProvider components={components}>
+                <MdxProvider>
                   <MDXRenderer>{post.body}</MDXRenderer>
-                </MDXProvider>
+                </MdxProvider>
               </Col>
             </Row>
           </Grid>

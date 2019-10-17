@@ -11,10 +11,12 @@ const { createFilePath } = require(`gatsby-source-filesystem`);
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
+  // const componentTemplate = path.resolve(`./src/templates/component-template.js`);
+
   const result = await graphql(
     `
       {
-        allFile(filter: { sourceInstanceName: { eq: "content-strategy" } }) {
+        contentStrategy: allFile(filter: { sourceInstanceName: { eq: "content-strategy" } }) {
           edges {
             node {
               id
@@ -31,6 +33,24 @@ exports.createPages = async ({ graphql, actions }) => {
             }
           }
         }
+        components: allFile(filter: { sourceInstanceName: { eq: "components" } }) {
+          edges {
+            node {
+              id
+              name
+              childMdx {
+                id
+                fields {
+                  slug
+                }
+                frontmatter {
+                  title
+                  category
+                }
+              }
+            }
+          }
+        }
       }
     `
   );
@@ -40,22 +60,33 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   // Create blog posts pages.
-  const posts = result.data.allFile.edges;
+  const contentStrategyPosts = result.data.contentStrategy.edges;
 
-  posts.forEach((post, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1].node.childMdx;
-    const next = index === 0 ? null : posts[index - 1].node.childMdx;
-
-    createPage({
-      path: `content-strategy${post.node.childMdx.fields.slug}`,
-      component: blogPost,
-      context: {
-        postId: post.node.childMdx.id,
-        previous,
-        next
-      }
-    });
+  contentStrategyPosts.forEach(post => {
+    if (post.node.childMdx) {
+      createPage({
+        path: `content-strategy${post.node.childMdx.fields.slug}`,
+        component: blogPost,
+        context: {
+          postId: post.node.childMdx.id
+        }
+      });
+    }
   });
+
+  // const componentPosts = result.data.components.edges;
+
+  // componentPosts.forEach(post => {
+  //   if (post.node.childMdx) {
+  //     createPage({
+  //       path: `components${post.node.childMdx.fields.slug}`,
+  //       component: componentTemplate,
+  //       context: {
+  //         postId: post.node.childMdx.id
+  //       }
+  //     });
+  //   }
+  // });
 };
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

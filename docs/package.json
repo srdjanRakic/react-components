@@ -23,6 +23,7 @@
     "@zendeskgarden/css-bedrock": "^7.0.30",
     "@zendeskgarden/react-buttons": "../packages/buttons",
     "@zendeskgarden/react-grid": "../packages/grid",
+    "@zendeskgarden/react-tables": "../packages/tables",
     "@zendeskgarden/react-theming": "../packages/theming",
     "@zendeskgarden/react-typography": "../packages/typography",
     "babel-plugin-styled-components": "^1.10.6",
@@ -54,6 +55,8 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-helmet": "^5.2.1",
+    "react-live": "^2.2.1",
+    "react-prism": "^4.3.2",
     "styled-components": "^4.4.0",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.75"

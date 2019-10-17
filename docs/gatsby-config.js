@@ -21,10 +21,24 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `components`,
+        path: `${__dirname}/src/pages/components`
+      }
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         path: `${__dirname}/content/content-strategy`,
         name: `content-strategy`
       }
     },
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     path: `${__dirname}/content/components`,
+    //     name: `components`
+    //   }
+    // },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -39,7 +53,7 @@ module.exports = {
         path: path.resolve(__dirname, '../packages/'),
         ignore: [
           '**/.*',
-          '**/*.spec.js',
+          '**/*.spec.*',
           '**/dist',
           '**/node_modules',
           '**/*.md',
@@ -52,6 +66,9 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: ['.mdx', '.md'],
+        defaultLayouts: {
+          components: path.resolve(__dirname, './src/templates/component-template.js')
+        },
         gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-images`,

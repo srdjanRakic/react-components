@@ -5,6 +5,8 @@
  * found at http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+require('prismjs');
 require('prismjs/themes/prism.css');
 require('@zendeskgarden/css-bedrock');
 require('@zendeskgarden/react-grid/dist/styles.css');
+require('@zendeskgarden/react-tables/dist/styles.css');
