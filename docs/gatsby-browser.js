@@ -11,3 +11,5 @@ require('@zendeskgarden/css-bedrock');
 require('@zendeskgarden/react-grid/dist/styles.css');
 require('@zendeskgarden/react-tables/dist/styles.css');
 require('@zendeskgarden/react-notifications/dist/styles.css');
+require('@zendeskgarden/react-forms/dist/styles.css');
+require('@zendeskgarden/react-dropdowns/dist/styles.css');

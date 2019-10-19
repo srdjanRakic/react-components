@@ -10,6 +10,8 @@ import { Link } from 'gatsby';
 import { ThemeProvider, getColor } from '@zendeskgarden/react-theming';
 import { Grid, Row, Col } from '@zendeskgarden/react-grid';
 
+import Search from './Search';
+
 /**
  * TODO
  */
@@ -37,14 +39,29 @@ function Layout({ children }) {
                 css={`
                   display: flex;
                   justify-content: flex-end;
-
-                  * {
-                    margin-left: ${p => p.theme.space.md};
-                  }
                 `}
               >
-                <Link to="/components">Components</Link>
-                <Link to="/content-strategy">Content Strategy</Link>
+                <Link
+                  to="/components"
+                  css={`
+                    margin-left: ${p => p.theme.space.md};
+                  `}
+                >
+                  Components
+                </Link>
+                <Link
+                  to="/content-strategy"
+                  css={`
+                    margin-left: ${p => p.theme.space.md};
+                  `}
+                >
+                  Content Strategy
+                </Link>
+                <Search
+                  css={`
+                    margin-left: ${p => p.theme.space.md};
+                  `}
+                />
               </div>
             </Col>
           </Row>
