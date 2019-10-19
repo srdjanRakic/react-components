@@ -14,15 +14,17 @@ import React, {
   HTMLAttributes
 } from 'react';
 import PropTypes from 'prop-types';
+import { DefaultTheme, ThemeProps } from 'styled-components';
 import { hasType } from '@zendeskgarden/react-utilities';
 import { useButtonGroup } from '@zendeskgarden/container-buttongroup';
+import { withTheme } from '@zendeskgarden/react-theming';
 
 import { StyledButtonGroup } from '../styled';
 import Button from './Button';
 
 export const ButtonGroupContext = createContext<boolean | undefined>(undefined);
 
-interface IButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
+interface IButtonGroupProps extends HTMLAttributes<HTMLDivElement>, ThemeProps<DefaultTheme> {
   selectedItem?: any;
   onSelect?: (item: any) => void;
 }
@@ -34,9 +36,11 @@ const ButtonGroup: React.FunctionComponent<IButtonGroupProps> = ({
   children,
   onSelect,
   selectedItem: controlledSelectedItem,
+  theme,
   ...otherProps
 }) => {
   const { selectedItem, focusedItem, getButtonProps, getGroupProps } = useButtonGroup({
+    rtl: theme.rtl,
     selectedItem: controlledSelectedItem,
     defaultSelectedIndex: 0,
     onSelect
@@ -88,4 +92,4 @@ ButtonGroup.propTypes = {
   onSelect: PropTypes.func
 };
 
-export default ButtonGroup;
+export default withTheme(ButtonGroup);

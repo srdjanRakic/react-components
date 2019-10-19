@@ -86,9 +86,7 @@ module.exports = {
             resolve: 'gatsby-remark-autolink-headers',
             options: {
               className: 'remark-autolink',
-              icon: `<svg class="remark-autolink-svg" xmlns="http://www.w3.org/2000/svg" width="12" height="12" focusable="false" viewBox="0 0 12 12">
-              <path fill="none" stroke="currentColor" stroke-linecap="round" d="M2.5 6l-1-1a2.482 2.482 0 010-3.5 2.482 2.482 0 013.5 0l2.25 2.25a2.482 2.482 0 010 3.5 2.458 2.458 0 01-.49.38M9.5 6l1 1a2.482 2.482 0 010 3.5 2.482 2.482 0 01-3.5 0L4.75 8.25a2.482 2.482 0 010-3.5 2.46 2.46 0 01.433-.345"/>
-            </svg>`
+              icon: `<svg class="remark-autolink-svg" xmlns="http://www.w3.org/2000/svg" width="12" height="12" focusable="false" viewBox="0 0 12 12"><path fill="none" stroke="currentColor" stroke-linecap="round" d="M2.5 6l-1-1a2.482 2.482 0 010-3.5 2.482 2.482 0 013.5 0l2.25 2.25a2.482 2.482 0 010 3.5 2.458 2.458 0 01-.49.38M9.5 6l1 1a2.482 2.482 0 010 3.5 2.482 2.482 0 01-3.5 0L4.75 8.25a2.482 2.482 0 010-3.5 2.46 2.46 0 01.433-.345"/></svg>`
             }
           },
           `gatsby-remark-prismjs`,
@@ -109,6 +107,7 @@ module.exports = {
     `gatsby-plugin-netlify-cms`,
     'gatsby-transformer-react-docgen',
     'gatsby-plugin-remove-trailing-slashes',
-    `gatsby-plugin-styled-components`
+    `gatsby-plugin-styled-components`,
+    'gatsby-plugin-svgr'
   ]
 };

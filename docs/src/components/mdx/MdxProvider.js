@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { MDXProvider } from '@mdx-js/react';
 import { Grid, Row, Col } from '@zendeskgarden/react-grid';
 import {
@@ -26,8 +26,39 @@ import { getColor } from '@zendeskgarden/react-theming';
 import CodeExample from '../CodeExample';
 import PropSheet from './PropSheet';
 
-const StyledH2 = styled(XXL).attrs({ tag: 'h2' })`
-  margin-bottom: ${props => props.theme.space.sm};
+const HeaderAnchorStyling = createGlobalStyle`
+  .remark-autolink {
+    float: left;
+    margin-left: -20px;
+    padding-right: 4px;
+    line-height: 1;
+  }
+
+  .remark-autolink-svg {
+    display: inline-block;
+    visibility: hidden;
+    vertical-align: middle;
+  }
+
+  h2:hover .remark-autolink-svg {
+    visibility: visible;
+  }
+
+  h3:hover .remark-autolink-svg {
+    visibility: visible;
+  }
+
+  h4:hover .remark-autolink-svg {
+    visibility: visible;
+  }
+
+  h5:hover .remark-autolink-svg {
+    visibility: visible;
+  }
+
+  h6:hover .remark-autolink-svg {
+    visibility: visible;
+  }
 `;
 
 const StyledHr = styled.hr`
@@ -78,7 +109,7 @@ const Dont = ({ children }) => {
 
 const components = {
   h1: props => <XXXL tag="h1" {...props} />,
-  h2: StyledH2,
+  h2: props => <XXL tag="h2" {...props} />,
   h3: props => <XL tag="h3" {...props} />,
   h4: props => <LG tag="h4" {...props} />,
   h5: props => <LG tag="h5" {...props} />,
@@ -103,5 +134,10 @@ const components = {
  * TODO
  */
 export default function MdxProvider({ children }) {
-  return <MDXProvider components={components}>{children}</MDXProvider>;
+  return (
+    <>
+      <HeaderAnchorStyling />
+      <MDXProvider components={components}>{children}</MDXProvider>
+    </>
+  );
 }

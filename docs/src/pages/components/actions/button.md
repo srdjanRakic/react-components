@@ -1,10 +1,8 @@
 ---
 title: Button
-category: Buttons
+category: Actions
 description: "Buttons allow users to easily take action or submit data with a single click. They make actions visible and clear."
 ---
-
-Buttons allow users to easily take action or submit data with a single click. They make actions visible and clear. Garden supports nine kinds of buttons, each with distinctive use cases.
 
 ## Best practices
 
