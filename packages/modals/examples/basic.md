@@ -2,106 +2,126 @@ The `Modal` component is implemented to the
 [W3C modal accessibility design pattern](https://www.w3.org/TR/wai-aria-practices/#dialog_modal)
 and applies the correct accessibility attributes to the views listed below.
 
+The `Modal` component returns keyboard focus to a trigger element (if one was used and one
+currently exists) that opened the modal when the modal is dismissed. Dismissing the `Modal`
+component returns the keyboard focus to the trigger element that opened the modal. In
+[certain circumstances](https://www.w3.org/TR/wai-aria-practices/#h-note-7), dismissing a modal
+may require developers to manage keyboard focus.
+
 ### Default Usages
 
 ```jsx
 const { Button } = require('@zendeskgarden/react-buttons/src');
 
-initialState = {
-  isModalVisible: false,
-  isDanger: false,
-  isLarge: false,
-  isAnimated: true
+const DefaultUsages = () => {
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const [isDanger, setIsDanger] = React.useState(false);
+  const [isLarge, setIsLarge] = React.useState(false);
+  const [isAnimated, setIsAnimated] = React.useState(true);
+  const triggerRef = React.useRef();
+
+  const onModalClose = () => setIsModalVisible(false);
+
+  return (
+    <>
+      <Grid>
+        <Row>
+          <Col md>
+            <Button
+              onClick={e => {
+                setIsModalVisible(true);
+                setIsDanger(false);
+                setIsLarge(false);
+                setIsAnimated(true);
+                triggerRef.current = e.target;
+              }}
+            >
+              Open default Modal
+            </Button>
+          </Col>
+          <Col md>
+            <Button
+              isDanger
+              onClick={e => {
+                setIsModalVisible(true);
+                setIsDanger(true);
+                setIsLarge(false);
+                setIsAnimated(true);
+                triggerRef.current = e.target;
+              }}
+            >
+              Open danger Modal
+            </Button>
+          </Col>
+          <Col md>
+            <Button
+              onClick={e => {
+                setIsModalVisible(true);
+                setIsDanger(false);
+                setIsLarge(true);
+                setIsAnimated(true);
+                triggerRef.current = e.target;
+              }}
+            >
+              Open large Modal
+            </Button>
+          </Col>
+          <Col md>
+            <Button
+              onClick={e => {
+                setIsModalVisible(true);
+                setIsDanger(false);
+                setIsLarge(false);
+                setIsAnimated(false);
+                triggerRef.current = e.target;
+              }}
+            >
+              Open Modal with no animation
+            </Button>
+          </Col>
+        </Row>
+      </Grid>
+      {isModalVisible && (
+        <Modal onClose={onModalClose} isLarge={isLarge} isAnimated={isAnimated}>
+          <Header isDanger={isDanger}>Example Header</Header>
+          <Body>
+            Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery.
+            Bunya es black-eyed pea prairie turnip leek lentil turnip greens parsnip. Sea lettuce
+            lettuce water chestnut eggplant winter purslane fennel azuki.
+          </Body>
+          <Footer>
+            <FooterItem>
+              <Button
+                onClick={() => {
+                  onModalClose();
+                  triggerRef.current && triggerRef.current.focus();
+                }}
+                basic
+              >
+                Cancel
+              </Button>
+            </FooterItem>
+            <FooterItem>
+              <Button
+                onClick={() => {
+                  onModalClose();
+                  triggerRef.current && triggerRef.current.focus();
+                }}
+                isPrimary
+                isDanger={isDanger}
+              >
+                Confirm
+              </Button>
+            </FooterItem>
+          </Footer>
+          <Close aria-label="Close modal" />
+        </Modal>
+      )}
+    </>
+  );
 };
 
-const onModalClose = () => setState({ isModalVisible: false });
-
-<div>
-  <Grid>
-    <Row>
-      <Col md>
-        <Button
-          onClick={() =>
-            setState({
-              isModalVisible: true,
-              isDanger: false,
-              isLarge: false,
-              isAnimated: true
-            })
-          }
-        >
-          Open default Modal
-        </Button>
-      </Col>
-      <Col md>
-        <Button
-          isDanger
-          onClick={() =>
-            setState({
-              isModalVisible: true,
-              isDanger: true,
-              isLarge: false,
-              isAnimated: true
-            })
-          }
-        >
-          Open danger Modal
-        </Button>
-      </Col>
-      <Col md>
-        <Button
-          onClick={() =>
-            setState({
-              isModalVisible: true,
-              isDanger: false,
-              isLarge: true,
-              isAnimated: true
-            })
-          }
-        >
-          Open large Modal
-        </Button>
-      </Col>
-      <Col md>
-        <Button
-          onClick={() =>
-            setState({
-              isModalVisible: true,
-              isDanger: false,
-              isLarge: false,
-              isAnimated: false
-            })
-          }
-        >
-          Open Modal with no animation
-        </Button>
-      </Col>
-    </Row>
-  </Grid>
-  {state.isModalVisible && (
-    <Modal onClose={onModalClose} isLarge={state.isLarge} isAnimated={state.isAnimated}>
-      <Header isDanger={state.isDanger}>Example Header</Header>
-      <Body>
-        Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya es
-        black-eyed pea prairie turnip leek lentil turnip greens parsnip. Sea lettuce lettuce water
-        chestnut eggplant winter purslane fennel azuki.
-      </Body>
-      <Footer>
-        <FooterItem>
-          <Button onClick={onModalClose} isBasic>
-            Cancel
-          </Button>
-        </FooterItem>
-        <FooterItem>
-          <Button onClick={onModalClose} isPrimary isDanger={state.isDanger}>
-            Confirm
-          </Button>
-        </FooterItem>
-      </Footer>
-      <Close aria-label="Close modal" />
-    </Modal>
-  )}
-</div>;
+<DefaultUsages />;
 ```
 
 ### Content Focus Jail
