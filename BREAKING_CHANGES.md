@@ -251,6 +251,7 @@ New features/fixes include:
   - POPPER_PLACEMENTS
   - getPopperPlacement
   - getRtlPopperPlacement
+- rename `initialIsVisible` prop to `isInitialVisible`
 - rename `arrow` prop to `hasArrow`
 - `appendToBody` prop is now `appendToNode`
   - You must now pass the HTML element which you would like the tooltip to append to

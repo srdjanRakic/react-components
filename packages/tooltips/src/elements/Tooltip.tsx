@@ -45,7 +45,7 @@ export interface ITooltipProps
   type?: TOOLTIP_TYPE;
   /** The z-index of the popper.js placement container */
   zIndex?: number | string;
-  initialIsVisible?: boolean;
+  isInitialVisible?: boolean;
   /** Control visibility state of the Tooltip */
   isVisible?: boolean;
   children: React.ReactElement;
@@ -55,7 +55,7 @@ export interface ITooltipProps
 const Tooltip: React.FC<ITooltipProps> = ({
   id,
   delayMS,
-  initialIsVisible,
+  isInitialVisible,
   content,
   refKey,
   placement,
@@ -74,7 +74,7 @@ const Tooltip: React.FC<ITooltipProps> = ({
   const { isVisible, getTooltipProps, getTriggerProps, openTooltip, closeTooltip } = useTooltip({
     id,
     delayMilliseconds: delayMS,
-    isVisible: initialIsVisible
+    isVisible: isInitialVisible
   });
 
   const controlledIsVisible = getControlledValue(externalIsVisible, isVisible);
@@ -199,7 +199,7 @@ Tooltip.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large', 'extra-large']),
   type: PropTypes.oneOf(['light', 'dark']),
   zIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  initialIsVisible: PropTypes.bool,
+  isInitialVisible: PropTypes.bool,
   refKey: PropTypes.string
 };
 
