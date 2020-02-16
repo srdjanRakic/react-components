@@ -27,14 +27,11 @@ export const Stepper = React.forwardRef<HTMLDivElement, IExampleProps>((props, r
       style={{
         margin: '12px 0px',
         display: 'flex',
-        flexDirection: props.orientation === 'vertical' ? 'column' : 'row'
+        flexDirection: props.orientation === 'vertical' ? 'column' : 'row',
+        alignItems: props.orientation === 'horizontal' ? 'center' : undefined
       }}
     >
       {React.Children.map(props.children, (child, index) => {
-        console.log(index, React.Children.toArray(props.children).length - 1);
-
-        const lastStep = index === React.Children.toArray(props.children).length - 1;
-
         return [
           index > 0 && props.orientation === 'horizontal' ? (
             <Connector orientation={props.orientation} />
@@ -42,8 +39,7 @@ export const Stepper = React.forwardRef<HTMLDivElement, IExampleProps>((props, r
           React.cloneElement(child as any, {
             index,
             isActive: index === props.activeStep,
-            orientation: props.orientation,
-            lastStep
+            orientation: props.orientation
           })
         ];
       })}

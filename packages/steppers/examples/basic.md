@@ -6,6 +6,13 @@ const BasicExample = () => {
   const [compact, setCompact] = React.useState(false);
   const [orientation, setOrientation] = React.useState('vertical');
   const [activeStep, setActiveStep] = React.useState(0);
+  const [completedSteps, setCompletedSteps] = React.useState(new Set());
+
+  const reset = () => {
+    setCompletedSteps(new Set())
+    setActiveStep(0)
+    setOrientation('vertical')
+  }
 
   return (
     <Grid>
@@ -53,24 +60,36 @@ const BasicExample = () => {
               </Radio>
             </Field>
             <Field>
-              <Label>Active Step</Label>
+              <Label>Drag to complete step ({activeStep + 1})</Label>
               <Range
                 max={3}
                 onChange={event => {
-                  setActiveStep(parseInt(event.target.value, 10));
+                  const nextStep = parseInt(event.target.value, 10)
+
+                  if (completedSteps.has(nextStep)) {
+                    const s = new Set(completedSteps)
+                    s.delete(nextStep)
+                    setCompletedSteps(s)
+                  } else {
+                    const s = new Set(completedSteps)
+                    s.add(activeStep)
+                    setCompletedSteps(s)
+                  }
+
+                  setActiveStep(nextStep);
                 }}
-                value={state.activeStep}
+                value={activeStep}
               />
             </Field>
+            <button onClick={reset}>Reset</button>
           </Well>
         </Col>
         <Col>
           <Stepper activeStep={activeStep} orientation={orientation}>
-            <Step isCompleted={false}>
-              <StepLabel>Label 1</StepLabel>
+            <Step label="Label 1" isCompleted={completedSteps.has(0)}>
               <StepContent>
                 <div>
-                  Veggie ipsum ggie ipsum ggie ipsum ipsum ggie ipsum ggie ipsum ipsum ggie ipsum
+                  Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi.                
                 </div>
                 <Field>
                   <Label>Text</Label>
@@ -78,25 +97,39 @@ const BasicExample = () => {
                 </Field>
               </StepContent>
             </Step>
-            <Step isCompleted={false}>
-              <StepLabel>Label 2</StepLabel>
+            <Step label="Label 2" isCompleted={completedSteps.has(1)}>
               <StepContent>
                 <div>Content</div>
                 <div>
-                  Veggie ipsum ggie ipsum ggie ipsum ipsum ggie ipsum ggie ipsum ipsum ggie ipsum
+                  Beetroot carrot watercress. Corn amaranth salsify bunya nuts nori azuki bean chickweed potato bell pepper artichoke.
                 </div>
               </StepContent>
             </Step>
-            <Step isCompleted={false}>
-              <StepLabel>Label 3</StepLabel>
+            <Step label="Label 3" isCompleted={completedSteps.has(2)}>
               <StepContent>Content</StepContent>
             </Step>
           </Stepper>
-          {activeStep === 0 ? (
+          {orientation === 'horizontal' && activeStep === 0 ? (
             <div>
-              <div>Content</div>
+              <div>Content for Step 1</div>
               <div>
-                Veggie ipsum ggie ipsum ggie ipsum ipsum ggie ipsum ggie ipsum ipsum ggie ipsum
+                Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi.                
+              </div>
+            </div>
+          ) : null}
+          {orientation === 'horizontal' && activeStep === 1 ? (
+            <div>
+              <div>Content for Step 2</div>
+              <div>
+                Veggie ipsum ggie ipsum ggie ipsum ipsum ggie ipsum ggie ipsum ipsum ggie ipsum.
+              </div>
+            </div>
+          ) : null}
+          {orientation === 'horizontal' && activeStep === 2 ? (
+            <div>
+              <div>Content for Step 3</div>
+              <div>
+                Beetroot carrot watercress. Corn amaranth salsify bunya nuts nori azuki bean chickweed potato bell pepper artichoke.
               </div>
             </div>
           ) : null}

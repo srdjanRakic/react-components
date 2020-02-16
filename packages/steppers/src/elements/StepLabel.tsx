@@ -9,7 +9,19 @@ import React, { HTMLAttributes } from 'react';
 import PropTypes from 'prop-types';
 
 export const StepLabel = React.forwardRef<HTMLDivElement, any>((props, ref) => {
-  return <span style={{ fontWeight: props.isActive ? 800 : undefined }}>{props.children}</span>;
+  return (
+    <span
+      style={{
+        fontWeight: props.isActive ? 600 : undefined,
+        color: props.isActive ? '#2F3945' : '#68737d',
+        display: 'inline-block',
+        lineHeight: '30px',
+        fontSize: '14px'
+      }}
+    >
+      {props.children}
+    </span>
+  );
 });
 
 StepLabel.propTypes = {

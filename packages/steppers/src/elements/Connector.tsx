@@ -16,8 +16,9 @@ export const Connector = React.forwardRef<HTMLDivElement, any>((props, ref) => {
         borderTopStyle: 'solid',
         borderTopWidth: '1px',
         display: 'block',
-        borderColor: 'orange',
-        width: '100%'
+        borderColor: '#d8dcde',
+        width: '100%',
+        margin: '0 12px'
       }}
     ></div>
   );

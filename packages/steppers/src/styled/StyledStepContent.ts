@@ -14,7 +14,9 @@ export const StyledStepContent = styled.div.attrs<any>({
   'data-garden-id': COMPONENT_ID,
   'data-garden-version': PACKAGE_VERSION
 })<any>`
-  margin-left: 5px;
+  margin-left: 12px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   padding: 16px;
 
   ${props => retrieveComponentStyles(COMPONENT_ID, props)};

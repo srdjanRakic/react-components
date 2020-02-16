@@ -16,7 +16,7 @@ export const StyledStep = styled.div.attrs<any>({
   'data-garden-version': PACKAGE_VERSION
 })<any>`
   &:not(:last-of-type) ${StyledStepContent} {
-    border-left: 1px solid red;
+    border-left: 1px solid #d8dcde;
   }
 
   ${props => retrieveComponentStyles(COMPONENT_ID, props)};
