@@ -1,17 +1,23 @@
 ```jsx
 const { Well } = require('@zendeskgarden/react-notifications/src');
 const { Toggle, Field, Input, Label, Radio, Range } = require('@zendeskgarden/react-forms/src');
+const { Button } = require('@zendeskgarden/react-buttons/src');
+const SmileyStrokeIcon = require('@zendeskgarden/svg-icons/src/16/smiley-stroke.svg').default;
+const StarStrokeIcon = require('@zendeskgarden/svg-icons/src/16/star-stroke.svg').default;
+const HomeStrokeIcon = require('@zendeskgarden/svg-icons/src/16/home-stroke.svg').default;
+
+
 
 const BasicExample = () => {
   const [compact, setCompact] = React.useState(false);
-  const [orientation, setOrientation] = React.useState('vertical');
+  const [orientation, setOrientation] = React.useState('horizontal');
   const [activeStep, setActiveStep] = React.useState(0);
   const [completedSteps, setCompletedSteps] = React.useState(new Set());
 
   const reset = () => {
     setCompletedSteps(new Set())
     setActiveStep(0)
-    setOrientation('vertical')
+    setOrientation('horizontal')
   }
 
   return (
@@ -86,7 +92,7 @@ const BasicExample = () => {
         </Col>
         <Col>
           <Stepper activeStep={activeStep} orientation={orientation}>
-            <Step label="Label 1" isCompleted={completedSteps.has(0)}>
+            <Step icon={HomeStrokeIcon} label="Label 1" isCompleted={completedSteps.has(0)}>
               <StepContent>
                 <div>
                   Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi.                
@@ -97,7 +103,7 @@ const BasicExample = () => {
                 </Field>
               </StepContent>
             </Step>
-            <Step label="Label 2" isCompleted={completedSteps.has(1)}>
+            <Step icon={SmileyStrokeIcon} label="Label 2" isCompleted={completedSteps.has(1)}>
               <StepContent>
                 <div>Content</div>
                 <div>
@@ -105,10 +111,11 @@ const BasicExample = () => {
                 </div>
               </StepContent>
             </Step>
-            <Step label="Label 3" isCompleted={completedSteps.has(2)}>
+            <Step icon={StarStrokeIcon} label="Label 3" isCompleted={completedSteps.has(2)}>
               <StepContent>Content</StepContent>
             </Step>
           </Stepper>
+          
           {orientation === 'horizontal' && activeStep === 0 ? (
             <div>
               <div>Content for Step 1</div>
@@ -133,6 +140,30 @@ const BasicExample = () => {
               </div>
             </div>
           ) : null}
+
+          <div className='button-bar' style={{
+            display: 'flex',
+            justifyContent: orientation === 'horizontal' ? 'center' : 'flex-end',
+            marginTop: '12px'
+          }}>
+            <Button onClick={() => {
+              if (activeStep > 0) {
+                console.log(activeStep, '<-- activeStep')
+                const s = new Set(completedSteps)
+                s.delete(activeStep - 1)
+                setCompletedSteps(s)
+                setActiveStep(activeStep - 1)
+              }
+            }} isBasic>Back</Button>
+            <Button onClick={() => {
+              if (activeStep < 3) {
+                const s = new Set(completedSteps)
+                s.add(activeStep)
+                setCompletedSteps(s)
+                setActiveStep(activeStep + 1)
+              }
+            }} isPrimary>Next</Button>
+          </div>
         </Col>
       </Row>
     </Grid>

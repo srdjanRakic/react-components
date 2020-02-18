@@ -10,14 +10,19 @@ import PropTypes from 'prop-types';
 import { StyledStep } from '../styled';
 import CheckCircleStrokeIcon from '@zendeskgarden/svg-icons/src/16/check-sm-stroke.svg';
 
-const IconContainer = ({ isActive, orientation, children }: any) => {
+const IconContainer = ({ hasIcon, isActive, orientation, children }: any) => {
+  let background = isActive ? '#68737d' : '#e9ebed';
+  if (hasIcon && !isActive) {
+    background = '#fff';
+  }
+
   return (
     <div
       style={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        background: isActive ? '#68737d' : '#e9ebed',
+        background,
         color: isActive ? '#fff' : '#2F3941',
         borderRadius: '100%',
         width: '24px',
@@ -35,6 +40,10 @@ const IconContainer = ({ isActive, orientation, children }: any) => {
 
 export const Step = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const numericStep = props.index + 1;
+
+  console.log(props.icon, '<-- Icon', React.isValidElement(props.icon));
+
+  const Icon = props.icon;
 
   return (
     <StyledStep>
@@ -59,8 +68,8 @@ export const Step = React.forwardRef<HTMLDivElement, any>((props, ref) => {
               <CheckCircleStrokeIcon />
             </IconContainer>
           ) : (
-            <IconContainer orientation={props.orientation} isActive={props.isActive}>
-              {numericStep}
+            <IconContainer hasIcon={Icon} orientation={props.orientation} isActive={props.isActive}>
+              {props.icon ? <Icon /> : numericStep}
             </IconContainer>
           )}
           {props.orientation === 'vertical' && (
